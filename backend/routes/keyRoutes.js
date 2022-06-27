@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router(),
   protector = require("../middlewares/routeProtector");
 
-const { changeKey } = require("../controllers/keyControllers");
+const { changeKey, upgradeKey } = require("../controllers/keyControllers");
 
-router.get("/change", protector, changeKey);
+router.put("/change", protector, changeKey);
+router.put("/upgrade", protector, upgradeKey);
 
 module.exports = router;
