@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 //route configs
 app.use("/auth", require("./routes/authRoutes"));
 app.use("/api", require("./routes/keyRoutes"));
+app.use("/exam", require("./routes/examRoutes"));
 app.use("*", require("./helpers/404handler"));
 
 //error handler
