@@ -15,7 +15,7 @@ const allSubs = (req, res) => {
     ],
   });
 };
-const allQuestions = asyncHandler(async (req, res) => {
+const getAllQuestions = asyncHandler(async (req, res) => {
   const questions = await prisma.euee.findMany({
     where: {
       Subject: req.subject,
@@ -25,12 +25,8 @@ const allQuestions = asyncHandler(async (req, res) => {
   });
   res.status(200).json({ Subject: req.subject, Year: req.year, questions });
 });
-const questionsByGrade = asyncHandler(async (req, res) => {
-  let grade = req.params.grade;
-  if (!(grade == 12 || grade == 11)) {
-    res.status(400);
-    throw new Error("Invalid grade. Grade should be 11 or 12.");
-  }
+const getQuestionsByGrade = asyncHandler(async (req, res) => {
+  let grade = req.grade;
   const questions = await prisma.euee.findMany({
     where: {
       Subject: req.subject.toLowerCase(),
@@ -38,6 +34,12 @@ const questionsByGrade = asyncHandler(async (req, res) => {
       GradeHS: grade.toString(),
     },
   });
+  if (questions.length === 0) {
+    res.status(400);
+    throw new Error(
+      "Invalid grade entered or questions from this chapter are not labeled yet"
+    );
+  }
   res.status(200).json({
     Subject: req.subject,
     Year: req.year,
@@ -47,7 +49,38 @@ const questionsByGrade = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { allSubs, allQuestions, questionsByGrade };
+const getQuestionsByChapter = asyncHandler(async (req, res) => {
+  let chapter = req.params.chapter,
+    grade = req.grade;
+  const questions = await prisma.euee.findMany({
+    where: {
+      Subject: req.subject.toLowerCase(),
+      Year: req.year,
+      GradeHS: grade.toString(),
+      Chapter: chapter.toString(),
+    },
+  });
+  if (questions.length === 0) {
+    res.status(400);
+    throw new Error(
+      "Invalid chapter entered or questions from this chapter are not labeled yet"
+    );
+  }
+  res.status(200).json({
+    Subject: req.subject,
+    Year: req.year,
+    grade,
+    chapter,
+    numberOfQuestions: questions.length,
+    questions,
+  });
+});
+module.exports = {
+  allSubs,
+  getAllQuestions,
+  getQuestionsByGrade,
+  getQuestionsByChapter,
+};
 /* 
 Rows	Subject   	
 	'Biology'	

@@ -1,8 +1,9 @@
 const express = require("express");
 const {
   allSubs,
-  allQuestions,
-  questionsByGrade,
+  getAllQuestions,
+  getQuestionsByGrade,
+  getQuestionsByChapter,
 } = require("../controllers/examControllers");
 const router = express.Router(),
   protector = require("../middlewares/routeProtector");
@@ -19,6 +20,17 @@ router.use("/:year", (req, res, next) => {
     next();
   }
 });
-router.get("/:year", allQuestions);
-router.get("/:year/:grade", questionsByGrade);
+router.get("/:year", getAllQuestions);
+router.use("/:year/:grade", (req, res, next) => {
+  let grade = req.params.grade;
+  if (!(grade == 12 || grade == 11)) {
+    res.status(400);
+    throw new Error("Invalid grade. Grade should be 11 or 12.");
+  } else {
+    req.grade = grade;
+    next();
+  }
+});
+router.get("/:year/:grade", getQuestionsByGrade);
+router.get("/:year/:grade/:chapter", getQuestionsByChapter);
 module.exports = router;
