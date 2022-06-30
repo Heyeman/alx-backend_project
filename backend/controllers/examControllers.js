@@ -75,11 +75,33 @@ const getQuestionsByChapter = asyncHandler(async (req, res) => {
     questions,
   });
 });
+const checkAllQuestions = asyncHandler(async (req, res) => {
+  const questions = await prisma.euee.findMany({
+    where: {
+      Subject: req.subject,
+      Year: req.year,
+      Stream: req.stream,
+    },
+  });
+  if (!questions.length) {
+    res.status(400);
+    throw new Error("Couldn't fetch questions");
+  }
+
+  let answers = {};
+  for (let q in questions) {
+    answers[q["ID"]] = q["Answer"];
+  }
+  // console.log(answers);
+
+  res.send(questions);
+});
 module.exports = {
   allSubs,
   getAllQuestions,
   getQuestionsByGrade,
   getQuestionsByChapter,
+  checkAllQuestions,
 };
 /* 
 Rows	Subject   	
