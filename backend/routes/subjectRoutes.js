@@ -1,9 +1,7 @@
 const express = require("express");
 const {
   allSubs,
-  getAllQuestions,
-  getQuestionsByGrade,
-  getQuestionsByChapter,
+  getQuestions,
   checkAnswers,
 } = require("../controllers/examControllers");
 const router = express.Router(),
@@ -21,7 +19,7 @@ router.use("/:year", (req, res, next) => {
     next();
   }
 });
-router.get("/:year", getAllQuestions);
+router.get("/:year", getQuestions);
 router.post("/:year", checkAnswers);
 router.use("/:year/:grade", (req, res, next) => {
   let grade = req.params.grade;
@@ -33,8 +31,8 @@ router.use("/:year/:grade", (req, res, next) => {
     next();
   }
 });
-router.get("/:year/:grade", getQuestionsByGrade);
+router.get("/:year/:grade", getQuestions);
 router.post("/:year/:grade", checkAnswers);
-router.get("/:year/:grade/:chapter", getQuestionsByChapter);
+router.get("/:year/:grade/:chapter", getQuestions);
 router.post("/:year/:grade/:chapter", checkAnswers);
 module.exports = router;

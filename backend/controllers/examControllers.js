@@ -15,71 +15,31 @@ const allSubs = (req, res) => {
     ],
   });
 };
-const getAllQuestions = asyncHandler(async (req, res) => {
-  const questions = await prisma.euee.findMany({
-    where: {
-      Subject: req.subject,
-      Year: req.year,
-      Stream: req.stream,
-    },
-  });
-  res.status(200).json({
+const getQuestions = asyncHandler(async (req, res) => {
+  checkParams = {
     Subject: req.subject,
     Year: req.year,
-    numberOfQuestions: questions.length,
-    questions,
-  });
-});
-const getQuestionsByGrade = asyncHandler(async (req, res) => {
-  let grade = req.grade;
-  const questions = await prisma.euee.findMany({
-    where: {
-      Subject: req.subject.toLowerCase(),
-      Year: req.year,
-      GradeHS: grade.toString(),
-    },
-  });
-  if (questions.length === 0) {
-    res.status(400);
-    throw new Error(
-      "Invalid grade entered or questions from this chapter are not labeled yet"
-    );
+    Stream: req.stream,
+  };
+  if (req.grade) {
+    checkParams["GradeHS"] = req.grade.toString();
   }
-  res.status(200).json({
-    Subject: req.subject,
-    Year: req.year,
-    grade,
-    numberOfQuestions: questions.length,
-    questions,
+  if (req.params.chapter) {
+    checkParams["Chapter"] = req.params.chapter.toString();
+  }
+
+  const questions = await prisma.euee.findMany({
+    where: checkParams,
   });
+  if (!questions.length) {
+    res.status(400);
+    throw new Error("Couldn't fetch questions with these parameters");
+  }
+  checkParams["numberOfQuestions"] = questions.length;
+  checkParams["Questions"] = questions;
+  res.status(200).json(checkParams);
 });
 
-const getQuestionsByChapter = asyncHandler(async (req, res) => {
-  let chapter = req.params.chapter,
-    grade = req.grade;
-  const questions = await prisma.euee.findMany({
-    where: {
-      Subject: req.subject.toLowerCase(),
-      Year: req.year,
-      GradeHS: grade.toString(),
-      Chapter: chapter,
-    },
-  });
-  if (questions.length === 0) {
-    res.status(400);
-    throw new Error(
-      "Invalid chapter entered or questions from this chapter are not labeled yet"
-    );
-  }
-  res.status(200).json({
-    Subject: req.subject,
-    Year: req.year,
-    grade,
-    chapter,
-    numberOfQuestions: questions.length,
-    questions,
-  });
-});
 const checkAnswers = asyncHandler(async (req, res) => {
   const userAnswers = req.body.answers || [],
     checkParams = {
@@ -90,8 +50,8 @@ const checkAnswers = asyncHandler(async (req, res) => {
   if (req.grade) {
     checkParams["GradeHS"] = req.grade.toString();
   }
-  if (req.chapter) {
-    checkParams["Chapter"] = req.chapter.toString();
+  if (req.params.chapter) {
+    checkParams["Chapter"] = req.params.chapter.toString();
   }
 
   const questions = await prisma.euee.findMany({
@@ -135,9 +95,7 @@ const checkAnswers = asyncHandler(async (req, res) => {
 });
 module.exports = {
   allSubs,
-  getAllQuestions,
-  getQuestionsByGrade,
-  getQuestionsByChapter,
+  getQuestions,
   checkAnswers,
 };
 /* 
