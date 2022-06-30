@@ -6,11 +6,11 @@ const mongoDBConn = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Database connected successfully");
+    console.log("Database connected successfully".cyan);
   } catch (err) {
-    console.log("Can not connect to database with this URI");
+    console.log("Can not connect to database with this URI".red);
     console.log(err.message);
-    process.exit(1);
+    process.exit();
   }
   // return mongoose.connect(process.env.MONGO_DB_URI, {
   //   useNewUrlParser: true,
@@ -18,13 +18,16 @@ const mongoDBConn = async () => {
   // });
 };
 const prismaConn = async () => {
-  // try {
-  //   await prisma.$connect();
-  //   console.log("Prisma Connected");
-  // } catch (error) {
-  //   console.log(`Cannot be connected: ${error.message}`);
-  // }
-  return prisma.$connect();
+  await prisma
+    .$connect()
+    .then(() => {
+      console.log("MySQL with Prisma connected".cyan);
+    })
+    .catch((error) => {
+      console.log("MySQL with Prisma not connected".red);
+      console.log("Exiting".red);
+      process.exit();
+    });
 };
 const prisma = new PrismaClient();
 module.exports = {

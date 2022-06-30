@@ -9,6 +9,9 @@ const allSubs = (req, res) => {
       "Mathematics",
       "Civics",
       "English",
+      "Economics",
+      "Geography",
+      "History",
     ],
   });
 };
@@ -31,7 +34,7 @@ const questionsByGrade = asyncHandler(async (req, res) => {
     where: {
       Subject: req.subject.toLowerCase(),
       Year: req.Year,
-      Grade: grade.toString(),
+      GradeHS: grade.toString(),
     },
   });
   res
@@ -41,24 +44,16 @@ const questionsByGrade = asyncHandler(async (req, res) => {
 
 module.exports = { allSubs, allQuestions, questionsByGrade };
 /* 
-127.0.0.1/euee/euee/		http://localhost/phpmyadmin/index.php?route=/table/structure&db=euee&table=euee#
-
-   Showing rows 0 - 10 (11 total, Query took 0.0187 seconds.) [Subject: BIOLOGY... - SAT MATH...]
-
-
-SELECT COUNT(*) AS `Rows`, `Subject` FROM `euee` GROUP BY `Subject` ORDER BY `Subject`
-
-
 Rows	Subject   	
-600	Biology	
-480	Chemistry	
-600	Civics	
-455	Economics	
-720	English	
-600	Geography	
-600	History	
-780	Mathematics	
-300	physics	
+	'Biology'	
+	Chemistry	
+	Civics	
+	
+	English	
+		
+	'History'	
+	Mathematics	
+	physics	
 210	SAT English	
 149	SAT Math	
 
