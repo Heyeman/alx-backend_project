@@ -9,10 +9,30 @@ router.use(
   "/:subject",
   (req, res, next) => {
     let sub = req.params.subject.toLowerCase();
-    if (!["physics", "chemistry", "biology"].includes(sub)) {
-      res.status(400).send("subject not found");
+    if (
+      ![
+        "physics",
+        "chemistry",
+        "biology",
+        "mathematics",
+        "civics",
+        "english",
+        "economics",
+        "geography",
+        "history",
+      ].includes(sub)
+    ) {
+      res.status(400);
+      throw new Error("Invalid subject");
     } else {
       req.subject = sub[0].toUpperCase() + sub.slice(1);
+      if (["physics", "chemistry", "biology", "mathematics"].includes(sub)) {
+        res.stream = "Natural";
+      } else if (["economics", "geography", "history"].includes(sub)) {
+        res.stream = "Social";
+      } else {
+        res.stream = "uni";
+      }
       next();
     }
   },

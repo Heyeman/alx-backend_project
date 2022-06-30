@@ -19,7 +19,8 @@ const allQuestions = asyncHandler(async (req, res) => {
   const questions = await prisma.euee.findMany({
     where: {
       Subject: req.subject,
-      Year: req.Year,
+      Year: req.year,
+      Stream: req.stream,
     },
   });
   res.status(200).json({ Subject: req.subject, Year: req.year, questions });
@@ -33,13 +34,17 @@ const questionsByGrade = asyncHandler(async (req, res) => {
   const questions = await prisma.euee.findMany({
     where: {
       Subject: req.subject.toLowerCase(),
-      Year: req.Year,
+      Year: req.year,
       GradeHS: grade.toString(),
     },
   });
-  res
-    .status(200)
-    .json({ Subject: req.subject, Year: req.year, grade, questions });
+  res.status(200).json({
+    Subject: req.subject,
+    Year: req.year,
+    grade,
+    numberOfQuestions: questions.length,
+    questions,
+  });
 });
 
 module.exports = { allSubs, allQuestions, questionsByGrade };

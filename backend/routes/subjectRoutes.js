@@ -15,7 +15,7 @@ router.use("/:year", (req, res, next) => {
     res.status(400);
     throw new Error("Year should be between 2005-2010");
   } else {
-    req.year = parseInt(req.params.year);
+    req.year = req.params.year;
     next();
   }
 });

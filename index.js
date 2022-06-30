@@ -9,7 +9,7 @@ prismaConn(
     .then(
       app.listen(port, (err) => {
         if (err) console.log(err);
-        console.log(`server listening to port ${port}`);
+        console.log(`Server listening to port ${port}`.yellow);
       })
     )
     .catch((err) => {
