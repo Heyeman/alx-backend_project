@@ -1,11 +1,29 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model euee {
+  ID             Int    @id @unique(map: "ID") @default(autoincrement())
+  Grade          String @db.VarChar(255)
+  Stream         String @db.VarChar(255)
+  Subject        String @db.VarChar(255)
+  Year           String @db.Text
+  Question       String @db.VarChar(10000)
+  Question_image String @db.Text
+  Radio_Name     String @db.VarChar(255)
+  A              String @db.Text
+  B              String @db.Text
+  C              String @db.Text
+  D              String @db.Text
+  Answer         String @db.Text
+  Reference      String @db.Text
+  GradeHS        String @db.VarChar(4)
+  Chapter        String @db.Text
+
+  @@index([Radio_Name], map: "Radio_Name")
 }

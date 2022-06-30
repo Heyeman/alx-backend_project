@@ -1,5 +1,5 @@
-const asyncHandler = require("express-async-handler");
-
+const asyncHandler = require("express-async-handler"),
+  { prisma } = require("../config/dbConn");
 const allSubs = (req, res) => {
   res.json({
     subjects: ["Physics", "chemistry", "biology"],

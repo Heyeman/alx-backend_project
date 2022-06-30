@@ -5,9 +5,22 @@ const router = express.Router(),
 const { allSubs } = require("../controllers/examControllers");
 
 router.get("/", allSubs);
-router.get("/:subject", (req, res) => {
-  res.send("Please specify exam years from 2005-2010");
-});
+router.use(
+  "/:subject",
+  (req, res, next) => {
+    if (
+      !["physics", "chemistry", "biology"].includes(
+        req.params.subject.toLowerCase()
+      )
+    ) {
+      res.status(400).send("subject not found");
+    } else {
+      req.subject = req.params.subject;
+      next();
+    }
+  },
+  require("./subjectRoutes")
+);
 
 // router.get("/:subject/year/:year", allQuestions);
 
