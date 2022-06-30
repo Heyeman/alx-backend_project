@@ -4,7 +4,7 @@ const {
   getAllQuestions,
   getQuestionsByGrade,
   getQuestionsByChapter,
-  checkAllQuestions,
+  checkAnswers,
 } = require("../controllers/examControllers");
 const router = express.Router(),
   protector = require("../middlewares/routeProtector");
@@ -22,7 +22,7 @@ router.use("/:year", (req, res, next) => {
   }
 });
 router.get("/:year", getAllQuestions);
-router.post("/:year", checkAllQuestions);
+router.post("/:year", checkAnswers);
 router.use("/:year/:grade", (req, res, next) => {
   let grade = req.params.grade;
   if (!(grade == 12 || grade == 11)) {
@@ -34,5 +34,7 @@ router.use("/:year/:grade", (req, res, next) => {
   }
 });
 router.get("/:year/:grade", getQuestionsByGrade);
+router.post("/:year/:grade", checkAnswers);
 router.get("/:year/:grade/:chapter", getQuestionsByChapter);
+router.post("/:year/:grade/:chapter", checkAnswers);
 module.exports = router;

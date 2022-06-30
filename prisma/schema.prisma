@@ -23,7 +23,7 @@ model euee {
   Answer         String @db.Text
   Reference      String @db.Text
   GradeHS        String @db.VarChar(4)
-  Chapter        String @db.Text
+  Chapter        String @db.VarChar(100)
 
   @@index([Radio_Name], map: "Radio_Name")
 }

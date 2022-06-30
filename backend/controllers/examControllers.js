@@ -62,7 +62,7 @@ const getQuestionsByChapter = asyncHandler(async (req, res) => {
       Subject: req.subject.toLowerCase(),
       Year: req.year,
       GradeHS: grade.toString(),
-      Chapter: chapter.toString(),
+      Chapter: chapter,
     },
   });
   if (questions.length === 0) {
@@ -80,15 +80,22 @@ const getQuestionsByChapter = asyncHandler(async (req, res) => {
     questions,
   });
 });
-const checkAllQuestions = asyncHandler(async (req, res) => {
-  const userAnswers = req.body.answers || [];
-  console.log(userAnswers);
-  const questions = await prisma.euee.findMany({
-    where: {
+const checkAnswers = asyncHandler(async (req, res) => {
+  const userAnswers = req.body.answers || [],
+    checkParams = {
       Subject: req.subject,
       Year: req.year,
       Stream: req.stream,
-    },
+    };
+  if (req.grade) {
+    checkParams["GradeHS"] = req.grade.toString();
+  }
+  if (req.chapter) {
+    checkParams["Chapter"] = req.chapter.toString();
+  }
+
+  const questions = await prisma.euee.findMany({
+    where: checkParams,
   });
   if (!questions.length) {
     res.status(400);
@@ -131,7 +138,7 @@ module.exports = {
   getAllQuestions,
   getQuestionsByGrade,
   getQuestionsByChapter,
-  checkAllQuestions,
+  checkAnswers,
 };
 /* 
 Rows	Subject   	
