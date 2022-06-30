@@ -23,7 +23,12 @@ const getAllQuestions = asyncHandler(async (req, res) => {
       Stream: req.stream,
     },
   });
-  res.status(200).json({ Subject: req.subject, Year: req.year, questions });
+  res.status(200).json({
+    Subject: req.subject,
+    Year: req.year,
+    numberOfQuestions: questions.length,
+    questions,
+  });
 });
 const getQuestionsByGrade = asyncHandler(async (req, res) => {
   let grade = req.grade;
@@ -76,6 +81,8 @@ const getQuestionsByChapter = asyncHandler(async (req, res) => {
   });
 });
 const checkAllQuestions = asyncHandler(async (req, res) => {
+  const userAnswers = req.body.answers || [];
+  console.log(userAnswers);
   const questions = await prisma.euee.findMany({
     where: {
       Subject: req.subject,
@@ -88,13 +95,36 @@ const checkAllQuestions = asyncHandler(async (req, res) => {
     throw new Error("Couldn't fetch questions");
   }
 
-  let answers = {};
-  for (let q in questions) {
+  let answers = {},
+    correct = 0,
+    incorrect = 0,
+    notAnswered = 0,
+    invalidQuestion = 0;
+
+  for (let q of questions) {
     answers[q["ID"]] = q["Answer"];
   }
-  // console.log(answers);
+  for (let q of userAnswers) {
+    if (q["ID"] in answers) {
+      if (answers[q["ID"]] == q["Answer"]) {
+        correct += 1;
+      } else {
+        incorrect += 1;
+      }
+      delete answers[q["ID"]];
+    } else {
+      invalidQuestion += 1;
+    }
+  }
 
-  res.send(questions);
+  res.json({
+    numberOfQuestions: questions.length,
+    answersGotten: Object.keys(userAnswers).length,
+    correct,
+    incorrect,
+    notAnswered,
+    invalidQuestion,
+  });
 });
 module.exports = {
   allSubs,

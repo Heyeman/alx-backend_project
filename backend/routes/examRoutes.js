@@ -27,11 +27,11 @@ router.use(
     } else {
       req.subject = sub[0].toUpperCase() + sub.slice(1);
       if (["physics", "chemistry", "biology", "mathematics"].includes(sub)) {
-        res.stream = "Natural";
+        req.stream = "Natural";
       } else if (["economics", "geography", "history"].includes(sub)) {
-        res.stream = "Social";
+        req.stream = "Social";
       } else {
-        res.stream = "uni";
+        req.stream = "uni";
       }
       next();
     }
