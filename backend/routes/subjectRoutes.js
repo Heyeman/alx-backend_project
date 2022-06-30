@@ -1,4 +1,9 @@
 const express = require("express");
+const {
+  allSubs,
+  allQuestions,
+  questionsByGrade,
+} = require("../controllers/examControllers");
 const router = express.Router(),
   protector = require("../middlewares/routeProtector");
 
@@ -7,13 +12,13 @@ router.get("/", (req, res) => {
 });
 router.use("/:year", (req, res, next) => {
   if (!(2004 < parseInt(req.params.year) && parseInt(req.params.year) < 2011)) {
-    res.send("invalid year");
+    res.status(400);
+    throw new Error("Year should be between 2005-2010");
   } else {
     req.year = parseInt(req.params.year);
     next();
   }
 });
-router.get("/:year", (req, res) => {
-  res.send("some year");
-});
+router.get("/:year", allQuestions);
+router.get("/:year/:grade", questionsByGrade);
 module.exports = router;

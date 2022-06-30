@@ -1,6 +1,6 @@
 const app = require("./backend/app");
 const port = process.env.PORT || 5000;
-const { mongoDBConn } = require("./backend/config/dbConn");
+const { mongoDBConn, prismaConn } = require("./backend/config/dbConn");
 mongoDBConn()
   .then(
     app.listen(port, (err) => {

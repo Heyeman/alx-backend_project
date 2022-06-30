@@ -12,9 +12,23 @@ const mongoDBConn = async () => {
     console.log(err.message);
     process.exit(1);
   }
+  // return mongoose.connect(process.env.MONGO_DB_URI, {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  // });
+};
+const prismaConn = async () => {
+  // try {
+  //   await prisma.$connect();
+  //   console.log("Prisma Connected");
+  // } catch (error) {
+  //   console.log(`Cannot be connected: ${error.message}`);
+  // }
+  return prisma.$connect();
 };
 const prisma = new PrismaClient();
 module.exports = {
   mongoDBConn,
   prisma,
+  prismaConn,
 };

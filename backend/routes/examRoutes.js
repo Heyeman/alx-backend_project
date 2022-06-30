@@ -8,14 +8,11 @@ router.get("/", allSubs);
 router.use(
   "/:subject",
   (req, res, next) => {
-    if (
-      !["physics", "chemistry", "biology"].includes(
-        req.params.subject.toLowerCase()
-      )
-    ) {
+    let sub = req.params.subject.toLowerCase();
+    if (!["physics", "chemistry", "biology"].includes(sub)) {
       res.status(400).send("subject not found");
     } else {
-      req.subject = req.params.subject;
+      req.subject = sub[0].toUpperCase() + sub.slice(1);
       next();
     }
   },
@@ -27,7 +24,8 @@ router.use(
 module.exports = router;
 /* 
 
-year - return all questions
+year - return all questions  - done
+left with others endpoints to deliver questions from a specific grade and specific chapter of the exam database
 /year/grade/gr - return all questions from a specific grade
 /grade/chapter - return questions from a specific chapter
 /math   /year/2010/
