@@ -17,6 +17,7 @@ module.exports = asyncHandler(async (req, res, next) => {
         "Unauthorised to access this resource with this API request key"
       );
     }
-    req.key = key;
+    req.key = apiKey;
+    next();
   }
 });
