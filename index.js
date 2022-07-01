@@ -1,5 +1,6 @@
 const { prisma } = require("@prisma/client"),
   colors = require("colors");
+const { createPool } = require("mysql");
 const app = require("./backend/app");
 const port = process.env.PORT || 5000;
 const { mongoDBConn, prismaConn } = require("./backend/config/dbConn");
