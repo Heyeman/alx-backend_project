@@ -11,6 +11,13 @@ module.exports = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("API request key not found");
   } else {
+    res.on("error", () => {
+      console.log("finished with error");
+    });
+    res.on("successful", () => {
+      console.log("Finished successfully");
+    });
+
     if (req.method == "POST" && key.type === "basic") {
       res.status(403);
       throw new Error(

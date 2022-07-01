@@ -37,6 +37,7 @@ const getQuestions = asyncHandler(async (req, res) => {
   }
   checkParams["numberOfQuestions"] = questions.length;
   checkParams["Questions"] = questions;
+  res.emit("successful");
   res.status(200).json(checkParams);
 });
 
