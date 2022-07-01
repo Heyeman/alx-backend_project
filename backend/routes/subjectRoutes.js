@@ -8,7 +8,7 @@ const router = express.Router(),
   protector = require("../middlewares/routeProtector");
 
 router.get("/", (req, res) => {
-  res.send("Please specify exam years from 2005-2010" + req.subject);
+  res.send("Please specify exam years from 2005-2010");
 });
 router.use("/:year", (req, res, next) => {
   if (!(2004 < parseInt(req.params.year) && parseInt(req.params.year) < 2011)) {

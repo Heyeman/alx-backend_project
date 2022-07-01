@@ -16,10 +16,21 @@ const allSubs = (req, res) => {
   });
 };
 const getQuestions = asyncHandler(async (req, res) => {
-  checkParams = {
+  const checkParams = {
     Subject: req.subject,
     Year: req.year,
     Stream: req.stream,
+  };
+  req.resources = {
+    subject: req.subject,
+    grade: req.grade,
+    year: req.year,
+    chapter: req.params.chapter,
+    requestType: req.params.chapter
+      ? "By chapter"
+      : req.grade
+      ? "By grade"
+      : "All",
   };
   if (req.grade) {
     checkParams["GradeHS"] = req.grade.toString();
@@ -33,11 +44,12 @@ const getQuestions = asyncHandler(async (req, res) => {
   });
   if (!questions.length) {
     res.status(400);
+    res.emit("error", req.resources);
     throw new Error("Couldn't fetch questions with these parameters");
   }
   checkParams["numberOfQuestions"] = questions.length;
   checkParams["Questions"] = questions;
-  res.emit("successful");
+  res.emit("successful", req.resources);
   res.status(200).json(checkParams);
 });
 
@@ -60,6 +72,8 @@ const checkAnswers = asyncHandler(async (req, res) => {
   });
   if (!questions.length) {
     res.status(400);
+    res.emit("error", req.resources);
+
     throw new Error("Couldn't fetch questions");
   }
 
@@ -84,7 +98,7 @@ const checkAnswers = asyncHandler(async (req, res) => {
       invalidQuestion += 1;
     }
   }
-
+  res.emit("successful");
   res.json({
     numberOfQuestions: questions.length,
     answersGotten: Object.keys(userAnswers).length,

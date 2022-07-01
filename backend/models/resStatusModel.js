@@ -7,7 +7,7 @@ const statusSchema = mongoose.Schema({
     required: true,
   },
   apiKey: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   method: {

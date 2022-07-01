@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler"),
   { apiModel } = require("../models/apiKeyModel"),
-  { ObjectId } = require("mongoose").Schema.Types;
+  { statusModel } = require("../models/resStatusModel");
 
 module.exports = asyncHandler(async (req, res, next) => {
   let apiKey = req.headers["request-key"];
@@ -13,9 +13,10 @@ module.exports = asyncHandler(async (req, res, next) => {
     res.status(400);
     throw new Error("API request key not found");
   } else {
+    const listener = require("../helpers/eventListener");
     const requestOptions = {
       status: true,
-      apiKey: key.apiKey,
+      apiKey,
       method: req.method === "GET" ? "Get" : "Check",
       resources: {
         subject: req.subject,
@@ -30,11 +31,24 @@ module.exports = asyncHandler(async (req, res, next) => {
       },
     };
 
-    res.on("error", () => {
-      console.log("finished with error");
+    res.on("error", async (resources) => {
+      try {
+        requestOptions.status = false;
+        requestOptions.resources = resources;
+        const savedStatus = await statusModel.create(requestOptions);
+        console.log("Error status saved");
+      } catch (error) {
+        throw new Error(error.message);
+      }
     });
-    res.on("successful", () => {
-      console.log("Finished successfully");
+    res.on("successful", async (resources) => {
+      try {
+        requestOptions.resources = resources;
+        const savedStatus = await statusModel.create(requestOptions);
+        console.log("Successful status saved");
+      } catch (error) {
+        throw new Error(error.message);
+      }
     });
 
     if (req.method == "POST" && key.type === "basic") {
