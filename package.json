@@ -1,0 +1,19 @@
+{
+  "name": "alx-backend_project",
+  "version": "1.0.0",
+  "description": "REST API for EUEE",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heyeman/alx-backend_project.git"
+  },
+  "author": "Heyeman - abdisaheyeman083@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Heyeman/alx-backend_project/issues"
+  },
+  "homepage": "https://github.com/Heyeman/alx-backend_project#readme"
+}
