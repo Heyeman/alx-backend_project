@@ -40,7 +40,12 @@ Database connected successfully
 - bcrypt
 - jsonwebtoken
 - colors
-
+```
+create an .env file with the following content:
+MONGO_DB_URI - mongo database uri
+JWT_SECRET - jwt secret
+DATABASE_URL - MySQL questions database url
+```
 
 ## Directory Hierarchy
 ```
@@ -138,7 +143,7 @@ A database query object is prepared by using the parameters subject, year, chapt
 ```
 - Checking the answers
 ```
-A similar procedure of fetching the questions based on the path parameter occurs here to filter the questions and answers.
+A similar procedure of fetching the questions based on the path parameter occurs here to filter the questions and answers. But the API key should have a pro plan to proceed.
 - After the questions are filtered, a hashmap consisting of question ID as a key and question answer as a value is prepared from the entered request parameters.
 - After that, by going through every question answer provided by the user, the user's answer is checked against the hashmap and the ID is deleted from the hashmap.
 - If the ID is found in the hashmap and the answer is correct, correctAnswers increases by 1, else, incorrectAnswers increases by 1 then the ID is deleted from the hashmap. 
@@ -146,7 +151,14 @@ A similar procedure of fetching the questions based on the path parameter occurs
 - If the hashmap is not empty, the number of elements in the hashmap is returned as the number of questions the user did not answer.
 - Returning the results
 ```
-  ## License
+### Status codes
+- 200 - request is successful
+- 400 - request is not successful(the user's fault)
+- 401 - request is not successful(the user did not provide necessary auth credentials)
+- 403 - request is not successful(the user is not authorized to perform the request)
+- 404 - request is not successful(the user did not provide a valid path)
+
+## License
 
   MIT License
 
@@ -154,8 +166,15 @@ A similar procedure of fetching the questions based on the path parameter occurs
 
   ## Questions?
 
-  <img src="https://avatars.githubusercontent.com/u/59885488?v=4" alt="Heyeman" width="40%" />
 
   For any questions, please contact me with the information below:
+  - Email: <a href="mailto: abdisaheyeman083@gmail.com">abdisaheyeman083@gmail.com</a>
 
-  GitHub: [@Heyeman](https://api.github.com/users/Heyeman)
+  
+ ## Author
+   Heyeman Urgessa - [Github](https://github.com/heyeman)
+
+  <img src="https://avatars.githubusercontent.com/u/59885488?v=4" alt="Heyeman" width="40%" />
+ 
+
+
