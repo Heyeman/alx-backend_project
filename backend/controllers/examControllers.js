@@ -41,6 +41,22 @@ const getQuestions = asyncHandler(async (req, res) => {
 
   const questions = await prisma.euee.findMany({
     where: checkParams,
+    select: {
+      ID: true,
+      Grade: true,
+      Stream: true,
+      Year: true,
+      Question: true,
+      Question_image: true,
+      Radio_Name: true,
+      A: true,
+      B: true,
+      C: true,
+      D: true,
+      Reference: true,
+      GradeHS: true,
+      Chapter: true,
+    },
   });
   if (!questions.length) {
     res.status(400);
