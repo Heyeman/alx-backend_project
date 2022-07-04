@@ -1,7 +1,6 @@
 # REST API for EUEE
 
-  ![Badge for GitHub repo top language](https://img.shields.io/github/languages/top/heyeman/alx-back
-end_project?style=flat&logo=appveyor) ![Badge for GitHub last commit](https://img.shields.io/github/
+  ![Badge for GitHub repo top language](https://img.shields.io/github/languages/top/heyeman/alx-backend_project?style=flat&logo=appveyor) ![Badge for GitHub last commit](https://img.shields.io/github/
 last-commit/heyeman/alx-backend_project?style=flat&logo=appveyor)
 
   Check out the badges hosted by [shields.io](https://shields.io/).
@@ -25,7 +24,15 @@ This project is a contains a REST API for developers to fetch national exam ques
 
   *Steps required to install project and how to get the development environment running:*
 
-  clone this github repo( https)
+  1. clone this github repo(https://github.com/Heyeman/alx-backend_project)
+  2. change your directory to alx-backend_project with alx-backend_project
+  3. install the required dependency list with npm install
+  4. execute the project with node index
+  - if the server starts with no error, the following is printed to the console
+  ```Server listening to port 5000
+MySQL with Prisma connected
+Database connected successfully```
+
 ## Installation  & Dependency list
 - Node.js
 - express.js and express async handler
@@ -35,11 +42,6 @@ This project is a contains a REST API for developers to fetch national exam ques
 - jsonwebtoken
 - colors
 
-  ## Usage
-
-  *Instructions and examples for use:*
-
-  usage
 
 ## Directory Hierarchy
 ```
@@ -74,10 +76,14 @@ This project is a contains a REST API for developers to fetch national exam ques
 |—— index.js
 |—— prisma
 |    |—— schema.prisma
-|—— RE2ADME.md
 |—— trial.js
 ```
 
+## Usage
+
+*Instructions and examples for use:*
+
+  - use ```/auth`` for authentication
   ## License
 
   MIT License
