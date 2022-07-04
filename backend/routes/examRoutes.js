@@ -39,15 +39,4 @@ router.use(
   require("./subjectRoutes")
 );
 
-// router.get("/:subject/year/:year", allQuestions);
-
 module.exports = router;
-/* 
-
-year - return all questions  - done
-left with others endpoints to deliver questions from a specific grade and specific chapter of the exam database
-/year/grade/gr - return all questions from a specific grade
-/grade/chapter - return questions from a specific chapter
-/math   /year/2010/
-
-*/
