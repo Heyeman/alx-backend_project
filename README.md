@@ -12,6 +12,9 @@ last-commit/heyeman/alx-backend_project?style=flat&logo=appveyor)
   *The what, why, and how:*
 
   Final portfolio project for ALX back-end track graduation
+Every year, Ethiopian high school seniors seat for their national university entrance exam. They are given above 80 multiple choice questions for about 7 subjects. 
+This project is a contains a REST API for developers to fetch national exam questions from the year 2005-2010(Ethiopian calendar) with an API key. It also let's them check the answers returned by the user.
+ 
 
   ## Table of Contents
   * [Installation](#installation)
