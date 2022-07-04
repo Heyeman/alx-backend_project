@@ -29,10 +29,9 @@ This project is a contains a REST API for developers to fetch national exam ques
   3. install the required dependency list with npm install
   4. execute the project with node index
   - if the server starts with no error, the following is printed to the console
-  ```Server listening to port 5000
+`Server listening to port 5000
 MySQL with Prisma connected
-Database connected successfully   
-aasd ```
+Database connected successfully   `
 
 ## Installation  & Dependency list
 - Node.js
