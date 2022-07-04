@@ -31,7 +31,8 @@ This project is a contains a REST API for developers to fetch national exam ques
   - if the server starts with no error, the following is printed to the console
   ```Server listening to port 5000
 MySQL with Prisma connected
-Database connected successfully   ```
+Database connected successfully   
+aasd ```
 
 ## Installation  & Dependency list
 - Node.js
