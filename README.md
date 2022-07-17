@@ -22,7 +22,7 @@ This project is a contains a REST API for developers to fetch national exam ques
   *Steps required to install project and how to get the development environment running:*
 
   1. clone this github repo(https://github.com/Heyeman/alx-backend_project)
-  2. change your directory to alx-backend_project with alx-backend_project
+  2. change your directory to alx-backend_project with ```cd alx-backend_project```
   3. install the required dependency list with npm install
   4. execute the project with node index
   - if the server starts with no error, the following is printed to the console
