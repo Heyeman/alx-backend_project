@@ -23,8 +23,8 @@ This project is a contains a REST API for developers to fetch national exam ques
 
   1. clone this github repo(https://github.com/Heyeman/alx-backend_project)
   2. change your directory to alx-backend_project with ```cd alx-backend_project```
-  3. install the required dependency list with npm install
-  4. execute the project with node index
+  3. install the required dependency list with ```npm install```
+  4. execute the project with ```node index```
   - if the server starts with no error, the following is printed to the console
 ```
 Server listening to port 5000
