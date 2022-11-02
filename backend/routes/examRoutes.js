@@ -8,19 +8,12 @@ router.get("/", allSubs);
 router.use(
   "/:subject",
   (req, res, next) => {
-    let sub = req.params.subject.toLowerCase();
+    let sub = req.params.subject.toLowerCase(),
+        subjectArray = [
+        "physics",        "chemistry",  "biology",        "mathematics",
+        "civics",        "english",        "economics", "geography",        "history"];
     if (
-      ![
-        "physics",
-        "chemistry",
-        "biology",
-        "mathematics",
-        "civics",
-        "english",
-        "economics",
-        "geography",
-        "history",
-      ].includes(sub)
+      !subjectArray.includes(sub)
     ) {
       res.status(400);
       throw new Error("Invalid subject");
