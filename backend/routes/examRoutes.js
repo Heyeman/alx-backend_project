@@ -11,7 +11,7 @@ router.use(
     let sub = req.params.subject.toLowerCase(),
         subjectArray = [
         "physics",        "chemistry",  "biology", "mathematics",
-        "civics",        "english",        "economics", "geography",        "history"];
+        "civics",     "english",        "economics", "geography",        "history"];
     if (
       !subjectArray.includes(sub)
     ) {
