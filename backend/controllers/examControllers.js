@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler"),
   { prisma } = require("../config/dbConn");
-const allSubs = (req, res) => {
-  res.json({
+let subjects = {
     subjects: [
       "Physics",
       "Chemistry",
@@ -13,7 +12,9 @@ const allSubs = (req, res) => {
       "Geography",
       "History",
     ],
-  });
+  };
+const allSubs = (req, res) => {
+  res.json(subjects);
 };
 const getQuestions = asyncHandler(async (req, res) => {
   const checkParams = {
@@ -129,18 +130,3 @@ module.exports = {
   getQuestions,
   checkAnswers,
 };
-/* 
-Rows	Subject   	
-	'Biology'	
-	Chemistry	
-	Civics	
-	
-	English	
-		
-	'History'	
-	Mathematics	
-	physics	
-210	SAT English	
-149	SAT Math	
-
-*/
